@@ -11,14 +11,19 @@ jobs:
     steps:
       - name: Install SSH keys
         run: |
+          echo "Setting up SSH keys..."
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
+          echo "Adding SSH host to known_hosts..."
           ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
       - name: Connect and Pull
         run: |
+          echo "Connecting to the remote server and pulling the latest changes..."
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }} && git checkout master && git pull"
 
       - name: Cleanup
-        run: rm -rf ~/.ssh
+        run: |
+          echo "Cleaning up SSH keys..."
+          rm -rf ~/.ssh
