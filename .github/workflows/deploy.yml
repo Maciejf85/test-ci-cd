@@ -33,6 +33,6 @@ jobs:
       - name: Execute remote commands
         run: |
           ssh -o StrictHostKeyChecking=no maciejf@s67.mydevil.net << 'EOF'
-          cd /domains/maciejf.pl/public_html/test-ci-cd/
+          cd domains/maciejf.pl/public_html/test-ci-cd/
           git pull origin master
           EOF
